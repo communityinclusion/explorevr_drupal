@@ -1,0 +1,321 @@
+/**
+ * This file should get overwritten if Method 1 is used. If Method 2 is chosen,
+ * remove this comment and start adding your styles to this file.
+ */
+body {background-color:#006E98; font-family: 'Work Sans', sans-serif;}
+.navbar {margin-bottom:0px;}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+ font-family: 'Oswald', sans-serif!important;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+.main-container {background-image: url(/sites/explorevr.org/files/images/compass_watermark2.png);background-repeat: no-repeat;background-position: -200px -200px, center; background-color:hsl(346, 3%, 97%); padding:2em 3em 4em 3em;}
+
+.block-search{max-width:250px; float:right;}
+
+.panel-heading {background:#FFC900; }
+
+.page-node-19 .page-header {
+  display: none;
+}
+
+.front li {list-style:none;}
+
+.page-archived-webinars li, .page-webinars-upcoming-webinars li {list-style: none;}
+
+.img {width:100%; max-width:516px;}
+
+
+.navbar .navbar-nav {
+    display: inline-block;
+    float: none;
+    font-weight:bold;
+}
+
+.navbar .navbar-collapse {
+    text-align: center;
+}
+
+
+
+.navbar-inverse .navbar-nav>li>a {color: white; text-align: left !important;}
+.navbar-inverse .navbar-nav>li {text-align: left !important;}
+
+.kill-link{pointer-events: none;
+       cursor: default;}
+
+.wh {background:white; padding:1em; margin:1em;}
+.shadow {
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
+  box-shadow:         3px 3px 5px 6px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+}
+
+.bl_border {background:white; padding:3em; margin:1em; border:#006E9D solid 3px; }
+
+.bl {background:#006E98; color:white; padding:1em; margin:1em;}
+.bl a{color:white;}
+
+.bl img {border:white 3px solid; margin-right:2em;}
+
+/* yellow boxes */
+
+.yl_box {background-color: #F6C342; color: #257198; padding: 1em 2em 1em 2em; font-weight: bold; height:42em;
+  -webkit-box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow:    3px 3px 5px 6px rgba(0, 0, 0, 0.4);  /* Firefox 3.5 - 3.6 */
+  box-shadow:         3px 3px 5px 6px rgba(0, 0, 0, 0.4);  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */}
+
+.yl_box .img {max-width:200px;}
+
+.yl_box ul {
+    margin: 0.75em 0;
+    padding: 0 1em;
+    list-style: none;
+}
+.yl_box li:before {
+    content: "";
+    border-color: transparent #257198;
+    border-style: solid;
+    border-width: 0.35em 0 0.35em 0.45em;
+    display: block;
+    height: 0;
+    width: 0;
+    left: -1em;
+    top: 0.9em;
+    position: relative;
+}
+
+.yl_box h3{background-color:#FAD888; border: solid white 2px; padding:1em;}
+.yl_box h3 img {float:right; margin-top:-.25em; }
+.yl_box a {color: #0078B1;text-decoration: underline;}
+
+/* end yellow boxes */
+
+.region-content {padding-bottom:7em;}
+
+/*black footer*/
+.blackish {background-color:black; color:white; vertical-align: middle;}
+.blackish img {max-width:100px;}
+
+/*hide front page content*/
+#first-time {display:none;}
+
+.not-active {
+   pointer-events: none;
+   cursor: default;
+}
+.nolink{padding-left: 1em;}
+
+
+/*
+
+.custombackground {
+    height: 20px;
+    width: 100%;
+    background-color:#fff;
+
+
+position: fixed;
+    background: transparent url("https://dl.dropboxusercontent.com/u/25498294/iciprojects/ExploreVR_files/explorevr-demo/css/stripes2.jpg") repeat-x top left ;
+    opacity:.5;
+   }
+nav{margin-bottom:40px!IMPORTANT;}
+
+
+navbar {
+ font-family: 'Work Sans', sans-serif!important;font-weight:400;
+}
+*/
+
+
+/*
+
+
+
+
+
+/*
+#breadcrumbs-four{
+  overflow: hidden;
+  width: 100%;
+  font-size:.7em;
+  margin:60px 0;
+
+}
+
+#breadcrumbs-four li{list-style:none!important;}
+
+#breadcrumbs-four li{
+  float: left;
+  margin: 0 .5em 0 1em;
+}
+
+#breadcrumbs-four a{
+  background: #D5D5D5;
+  padding: .7em 1em;
+  float: left;
+  text-decoration: none;
+  color: #444;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  position: relative;
+   transform: skew(-20deg);
+}
+
+#breadcrumbs-four a:hover{
+  background: #FFCB04;
+}
+
+#breadcrumbs-four a::before,
+#breadcrumbs-four a::after{
+  content:'';
+  position:absolute;
+  top: 0;
+  bottom: 0;
+  width: 1em;
+  background: #D5D5D5;
+
+}
+
+#breadcrumbs-four a::before{
+
+  left: -.5em;
+  border-radius: 2px 0 0 2px;
+}
+
+#breadcrumbs-four a:hover::before{
+  background: #FFCB04;
+}
+
+#breadcrumbs-four a::after{
+  right: -.5em;
+  border-radius: 0 2px 2px 0;
+}
+
+#breadcrumbs-four a:hover::after{
+  background: #FFCB04;
+}
+
+#breadcrumbs-four .current,
+#breadcrumbs-four .current:hover{
+  font-weight: bold;
+  background: none;
+  border:#d5d5d5 1px solid;
+   transform: skew(-20deg);
+}
+
+#breadcrumbs-four .current::after,
+#breadcrumbs-four .current::before{
+  content: normal;
+}
+
+footer {
+    margin: 50px 0px 0px 0px;height:200px!important;
+}
+#navbar {
+   border-bottom-width:15px;
+    - 3 types of border exist repeated, rounded or stretched (repeat / round / stretch)-
+   -moz-border-image:url(stripes2.png) 30 30 stretch ;
+   -webkit-border-image:url(stripes2.png) 30 30 stretch;
+}
+
+*/
+
+
+
+ a, a > span {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+  line-height: 16px;
+  color: #C92E39;
+  font-weight:700;
+  padding-left:4px;padding-right:4px;
+}
+
+a:hover{ text-decoration: none;}
+
+
+a.tip {border:#333 solid thin!important; padding:0 2px!important;}
+
+a:before, a:after, a > span:before, a > span:after {
+  content: '';
+  position: absolute;
+  transition: transform .5s ease;
+}
+
+.effect-3 {
+	font-family: 'Work Sans', sans-serif;
+ display: inline-flex;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  overflow: hidden!important;
+  text-align: left;
+
+}
+.effect-3:before {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: #0075AD;
+  transform: translateX(-100%);
+}
+.effect-3:hover:before {
+  transform: translateX(0);
+  font-weight: 700;
+}
+	    /* Links styles. */
+
+	    /*
+a {
+	text-decoration: none!important;
+	position: relative!important;
+	-webkit-transition: all .3s!important;
+	-moz-transition: all .3s!important;
+	-ms-transition: all .3s!important;
+	-o-transition: all .3s!important;
+	transition: all .3s!important;
+}
+a:after, a:before {
+	-webkit-transition: all .3s!important;
+	-moz-transition: all .3s!important;
+	-ms-transition: all .3s!important;
+	-o-transition: all .3s!important;
+		transition: all .3s!important;
+}
+*/
+/*!
+ * Start Bootstrap - Shop Item HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+
+.leaf {padding-right:10px;}
+/*
+footer {
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #f5f5f5;}
+
+
+
+*/
+
+/*jc edits */
+.panel-heading {font-weight: bold; border-color: #006C9B;}
+.panel {border-color: #006C9B;}
+svg {width:100%;}

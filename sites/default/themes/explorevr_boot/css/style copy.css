@@ -1,0 +1,39 @@
+/**
+ * This file should get overwritten if Method 1 is used. If Method 2 is chosen,
+ * remove this comment and start adding your styles to this file.
+ */
+#admin-menu, #admin-menu .dropdown { z-index: 5000; }
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #999999;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
+.navbar-inverse {
+    background-color: #3784B4;
+    border-color: #080808;
+}
+.navbar-fixed-top {
+    border-width: 0 0 1px;
+    top: 0;
+}
+
+.jumbotron h1{font-size: 1em;}
+.lined {border-right: 1px darkgrey solid;}
+  
+.jumbotron  { 
+  background: url(../img/US_Map.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+footer  { 
+  background: url(../img/US_Map.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
