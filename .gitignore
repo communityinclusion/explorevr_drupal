@@ -4,4 +4,23 @@ sites/*/settings*.php
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
+sites/explorevr.org
+authorize.php
+CHANGELOG.txt
+cron.php
+.htaccess
+includes
+index.php
+INSTALL.mysql.txt
+install.php
+INSTALL.txt
+LICENSE.txt
+MAINTAINERS.txt
+misc
+modules
+profiles
+README.txt
+robots.txt
+scripts
+themes
 
