@@ -22,3 +22,7 @@ README.txt
 robots.txt
 scripts
 themes
+.editorconfig
+UPGRADE.txt
+web.config
+xmlrpc.php
