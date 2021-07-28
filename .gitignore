@@ -30,3 +30,4 @@ xmlrpc.php
 INSTALL.pgsql.txt
 INSTALL.sqlite.txt
 update.php
+sites/all
