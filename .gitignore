@@ -6,6 +6,7 @@ sites/*/private
 sites/explorevr.org
 authorize.php
 CHANGELOG.txt
+COPYRIGHT.txt
 cron.php
 .htaccess
 includes
@@ -26,3 +27,6 @@ themes
 UPGRADE.txt
 web.config
 xmlrpc.php
+INSTALL.pgsql.txt
+INSTALL.sqlite.txt
+update.php
