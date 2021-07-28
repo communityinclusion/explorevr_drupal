@@ -1,0 +1,6 @@
+name = File Up
+description = Uploads zip files containing images and puts them in a configurable folder
+core = 7.x
+version = "7.x-1.0-dev"
+core = "7.x"
+

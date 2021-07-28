@@ -1,0 +1,96 @@
+<?php
+
+/**
+ * @file
+ * A simple upload module
+ */
+
+
+
+function fileup_permission() {
+  return array(
+    'access browse_images page' => array(
+      'title' => t('Access browse_images page'),
+      'description' => t('Allow users to access the file browsing page'),
+    ),
+    'access fileup page' => array(
+      'title' => t('Access fileup page'),
+      'description' => t('Allow users to access the file upload page'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function fileup_menu() {
+  $items = array();
+ 
+  $items['fileup'] = array(
+    'title' => 'File Uploads',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('fileup_upload_form'),
+    'access arguments' => array('access fileup page'),
+    'description' => 'Upload your zip file.',
+    'file' => 'fileup_form.inc',
+    'type' => MENU_NORMAL_ITEM,
+    'weight' => 0,
+  );
+
+  $items['fileup/browse_images'] = array(
+    'title' => 'Browse Images',
+    
+    'page callback' => 'fileup_browse_images',
+    
+    'description' => 'Browse and download image files',
+    'type' => MENU_NORMAL_ITEM,
+    'access arguments' => array('access browse_images page'),
+    'weight' => 1,
+  );
+  
+ 
+
+  return $items;
+}
+
+/**
+ * Page callback for our general info page.
+ */
+function fileup_intro() {
+  $markup = t('The File Up Module uploads a zip file if it contains only image files.  It puts them in a file accessible only to those authorized to view it.');
+  return array('#markup' => $markup);
+}
+
+/**
+ * Implements hook_help().
+ */
+function fileup_help($path, $arg) {
+  switch ($path) {
+    case 'fileup':
+     
+      $help = t('Use the field below to upload an archive file (.zip only) containing images.  The images will be extracted and available on the Image downloads page.');
+      break;
+  }
+  if (!empty($help)) {
+    return '<p>' . $help . '</p>';
+  }
+}
+
+
+
+function fileup_browse_images() {
+
+ $directory =  'public://fileup_images';
+$scan = file_scan_directory($directory, '/^.*\.(jpg|jpeg|png|gif|tiff|tif|bmp)$/i');
+
+
+$imglist = '';
+foreach ($scan as $imgfile) { 
+$realurl = file_create_url($imgfile->uri);
+$shortpath = str_replace("public://fileup_images/", "", $imgfile->uri);
+$imglist .= "<li><a href='$realurl'>$shortpath</a></li>"; }
+
+return array('#markup' => "<ul>$imglist</ul>");
+}
+

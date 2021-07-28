@@ -1,0 +1,17 @@
+package = Mail
+name = Mailgun
+description = "Provides integration with Mailgun's email sending API."
+core = 7.x
+php = 5.5
+configure = admin/config/system/mailgun
+
+files[] = mailgun.mail.inc
+
+dependencies[] = mailsystem (>=2.x)
+
+; Information added by Drupal.org packaging script on 2017-12-06
+version = "7.x-1.6"
+core = "7.x"
+project = "mailgun"
+datestamp = "1512586085"
+
