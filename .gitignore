@@ -1,6 +1,7 @@
 # Ignore configuration files that may contain sensitive information.
 sites/*/settings*.php
 sites/default/settings.php
+
 # Ignore paths that contain user-generated content.
 sites/default/files
 sites/default/private
@@ -31,4 +32,5 @@ xmlrpc.php
 INSTALL.pgsql.txt
 INSTALL.sqlite.txt
 update.php
+
 
