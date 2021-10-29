@@ -184,8 +184,8 @@ $databases = array (
     'default' =>
     array (
       'database' => 'explorevr',
-      'username' => 'root',
-      'password' => 'root',
+      'username' => 'explorevr_user',
+      'password' => 'e7rK8yt9F',
       'host' => 'localhost',
       'port' => '',
       'driver' => 'mysql',
