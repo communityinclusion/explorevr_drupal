@@ -1035,3 +1035,47 @@ width:100%;
     margin-right: 13px;
 }
 
+
+
+
+.forum-post-info
+{
+  padding:5px;
+}
+
+.forum-table {
+    width: 100%;
+}
+
+.forum-topic-list {
+    width: 100%;
+}
+
+
+
+table.forum-table, table.forum-table-topics {
+     width: 100%;
+
+}
+
+
+table.forum-table th, table.forum-table-topics th{
+    padding:5px 0;
+
+}
+
+
+table.forum-table tbody tr td, table.forum-table-topics tbody tr td {
+    padding:5px 3px;
+
+}
+
+.forum-post-links {
+    display: flex;
+    }
+
+.list-inline.well {
+
+  margin-right: 10px;
+  }
+
