@@ -1096,3 +1096,8 @@ table.forum-table tbody tr td, table.forum-table-topics tbody tr td {
 .btn-pe {
 	background-color:#639c3b;
 	color: #fff;}
+
+.btn-pe:hover {
+    color: #fff;
+    background-color: #6faf42;
+}
