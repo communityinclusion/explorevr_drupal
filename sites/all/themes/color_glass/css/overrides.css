@@ -1086,8 +1086,13 @@ table.forum-table tbody tr td, table.forum-table-topics tbody tr td {
 	background-color:#639c3b;
 	color:#fff;
 	padding: 5px;
+	padding-bottom: 20px;
 	margin: 5px;
 }
 
 
 .peBlock .title {color:#fff;}
+
+.btn-pe {
+	background-color:#639c3b;
+	color: #fff;}
