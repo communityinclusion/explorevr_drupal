@@ -1079,3 +1079,15 @@ table.forum-table tbody tr td, table.forum-table-topics tbody tr td {
   margin-right: 10px;
   }
 
+
+/* Progressive Employment Portal */
+
+.peBlock {
+	background-color:#639c3b;
+	color:#fff;
+	padding: 5px;
+	margin: 5px;
+}
+
+
+.peBlock .title {color:#fff;}
