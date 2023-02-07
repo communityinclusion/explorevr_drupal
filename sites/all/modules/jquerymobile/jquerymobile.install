@@ -1,6 +1,7 @@
 <?php
 /**
  * @file
+ * The install and uninstall functions for jquerymobile.
  */
 
 /**
@@ -187,21 +188,21 @@ function jquerymobile_schema() {
  * Implements hook_update_N().
  */
 function jquerymobile_update_7200() {
-      variable_del('front');
-      variable_del('custom_themes');
-      variable_del('ns');
-      variable_del('autoInitializePage');
-      variable_del('subPageUrlKey');
-      variable_del('activePageClass');
-      variable_del('activeBtnClass');
-      variable_del('ajaxEnabled');
-      variable_del('linkBindingEnabled');
-      variable_del('hashListeningEnabled');
-      variable_del('pushStateEnabled');
-      variable_del('defaultPageTransition');
-      variable_del('touchOverflowEnabled');
-      variable_del('defaultDialogTransition');
-      variable_del('minScrollBack');
-      variable_del('loadingMessage');
-      variable_del('pageLoadErrorMessage');
+  variable_del('front');
+  variable_del('custom_themes');
+  variable_del('ns');
+  variable_del('autoInitializePage');
+  variable_del('subPageUrlKey');
+  variable_del('activePageClass');
+  variable_del('activeBtnClass');
+  variable_del('ajaxEnabled');
+  variable_del('linkBindingEnabled');
+  variable_del('hashListeningEnabled');
+  variable_del('pushStateEnabled');
+  variable_del('defaultPageTransition');
+  variable_del('touchOverflowEnabled');
+  variable_del('defaultDialogTransition');
+  variable_del('minScrollBack');
+  variable_del('loadingMessage');
+  variable_del('pageLoadErrorMessage');
 }
