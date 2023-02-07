@@ -10,6 +10,7 @@
  *
  * @ingroup views_display_plugins
  */
+#[\AllowDynamicProperties]
 class views_plugin_display_page extends views_plugin_display {
 
   /**
@@ -87,7 +88,7 @@ class views_plugin_display_page extends views_plugin_display {
     $path = implode('/', $bits);
 
     $access_plugin = $this->get_plugin('access');
-    if (!isset($access_plugin)) {
+    if (!$access_plugin) {
       $access_plugin = views_get_plugin('access', 'none');
     }
 

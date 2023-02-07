@@ -363,6 +363,12 @@ function themekey_match_rule_childs(&$parameters, $options, $parent = 0) {
             'theme' => $item->theme,
             'rules_matched' => $rules,
           );
+
+          // Extend returning array.
+          if ($options['table'] == 'themekey_css_rules') {
+            $child_lookups[$parent]['css_group'] = $item->css_group;
+            $child_lookups[$parent]['css_weight'] = $item->css_weight;
+          }
         }
 
         // return own theme or theme from child property or NULL in case of a database error

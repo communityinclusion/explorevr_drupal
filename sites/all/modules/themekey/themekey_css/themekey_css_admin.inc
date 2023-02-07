@@ -26,10 +26,33 @@ require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'themekey') . '/theme
  * @ingroup forms
  */
 function themekey_css_rule_chain_form($form, &$form_state) {
+  $css_group_options = array(
+    'CSS_DEFAULT' => 'default',
+    'CSS_THEME' => 'theme',
+    'CSS_SYSTEM' => 'system',
+  );
+
+  // range(-50, 50) returns array with keys from 0 to 100
+  // but we need array with keys from -50 to 50
+  // because keys will be values for select.
+  $css_weight_options = drupal_map_assoc(range(-50, 50));
+
   return themekey_abstract_rule_chain_form($form, $form_state, array(
     'load_rules_callback' => 'themekey_css_load_rules',
     'themes' => themekey_css_options(),
     'rule_delete_path' => 'admin/config/user-interface/themekey/css/delete/',
+    'additional_fields' => array(
+      'css_group' => array(
+        '#type' => 'select',
+        '#default_value' => 'CSS_DEFAULT',
+        '#options' => $css_group_options,
+      ),
+      'css_weight' => array(
+        '#type' => 'select',
+        '#default_value' => 0,
+        '#options' => $css_weight_options,
+      ),
+    ),
   ));
 }
 
@@ -97,12 +120,18 @@ function theme_themekey_css_rule_chain_form($variables) {
   return theme_themekey_abstract_rule_chain_form($variables, array(
     'header' => array(
       t('Adding CSS Rule Chain'),
-      t('CSS'),
+      t('CSS file'),
+      t('CSS group'),
+      t('CSS weight'),
       t('Enabled'),
       t('Operation'),
       t('Parent'),
       t('Weight'),
       t('Page<br />Cache'),
-    )
+    ),
+    'additional_fields' => array(
+      'css_group',
+      'css_weight',
+    ),
   ));
 }
