@@ -197,6 +197,14 @@ function themekey_abstract_rule_chain_form($form, &$form_state, $options) {
       '#type' => 'hidden',
       '#default_value' => $item['module'],
     );
+
+    // Extend form with [old_items] additional fields.
+    if (isset($options['additional_fields'])) {
+      foreach ($options['additional_fields'] as $field_name => $field_definition) {
+        $form['old_items'][$item['id']][$field_name] = $field_definition;
+        $form['old_items'][$item['id']][$field_name]['#default_value'] = $item[$field_name];
+      }
+    }
   }
 
   $form['new_item']['property'] = array(
@@ -235,6 +243,13 @@ function themekey_abstract_rule_chain_form($form, &$form_state, $options) {
     '#type' => 'submit',
     '#value' => t('Save configuration'),
   );
+
+  // Extend form with [new_item] additional fields.
+  if (isset($options['additional_fields'])) {
+    foreach ($options['additional_fields'] as $field_name => $field_definition) {
+      $form['new_item'][$field_name] = $field_definition;
+    }
+  }
 
   return $form;
 }
@@ -700,6 +715,13 @@ function theme_themekey_abstract_rule_chain_form($variables, $options) {
         $form['old_items'][$key]['enabled']['#attributes']['class'] = array('themekey-property-enabled');
         $form['old_items'][$key]['theme']['#attributes']['class'] = array('themekey-property-theme themekey-fadeable');
 
+        // Add special classes to [old_items] additional columns.
+        if (isset($options['additional_fields'])) {
+          foreach ($options['additional_fields'] as $field_name) {
+            $form['old_items'][$key][$field_name]['#attributes']['class'] = array(drupal_clean_css_identifier("themekey-property-$field_name"));
+          }
+        }
+
         if (isset($form['old_items'][$key]['append_path'])) {
           // Special element of ThemeKey Redirect. See themekey_redirect_rule_chain_form().
           $form['old_items'][$key]['append_path']['#attributes']['class'] = array('themekey-property-append-path themekey-fadeable');
@@ -747,6 +769,17 @@ function theme_themekey_abstract_rule_chain_form($variables, $options) {
             // Special element of ThemeKey Redirect. See themekey_redirect_rule_chain_form().
             (isset($form['old_items'][$key]['append_path']) ? drupal_render($form['old_items'][$key]['append_path']) : ''),
         );
+
+        // Extend table with [old_items] additional columns.
+        // It would be logical to place addition columns between 'theme'
+        // and 'enabled' columns.
+        if (isset($options['additional_fields'])) {
+          foreach ($options['additional_fields'] as $field_name) {
+            $elements[] = array(
+              'data' => drupal_render($form['old_items'][$key][$field_name]),
+            );
+          }
+        }
 
         $elements[] = array(
           'data' => drupal_render($form['old_items'][$key]['enabled']),
@@ -816,6 +849,13 @@ function theme_themekey_abstract_rule_chain_form($variables, $options) {
         $form['new_item']['wildcard']['#attributes']['style'] = 'display: none';
       }
 
+      // Add special classes to [new_item] additional columns.
+      if (isset($options['additional_fields'])) {
+        foreach ($options['additional_fields'] as $field_name) {
+          $form['new_item'][$field_name]['#attributes']['class'] = array(drupal_clean_css_identifier("themekey-property-$field_name"));
+        }
+      }
+
       $elements = array();
       $elements[] = t('New Rule:');
       $elements[] = array(
@@ -830,6 +870,16 @@ function theme_themekey_abstract_rule_chain_form($variables, $options) {
           // Special element of ThemeKey Redirect. See themekey_redirect_rule_chain_form().
           (isset($form['new_item']['append_path']) ? drupal_render($form['new_item']['append_path']) : ''),
       );
+
+      // Extend table with [new_item] additional columns.
+      // It would be logical to place addition columns between 'theme'
+      // and 'enabled' columns.
+      if (isset($options['additional_fields'])) {
+        foreach ($options['additional_fields'] as $field_name) {
+          $elements[] = array('data' => drupal_render($form['new_item'][$field_name]));
+        }
+      }
+
       $elements[] = array('data' => drupal_render($form['new_item']['enabled']));
 
       $row['data'] = $elements;
@@ -838,12 +888,21 @@ function theme_themekey_abstract_rule_chain_form($variables, $options) {
   }
 
   if (!empty($rows)) {
-    $header = array(
-      '',
-      $options['header'][0],
-      $options['header'][1],
-      $options['header'][2],
-    );
+    // Remove 'Operation', 'Parent', 'Weight' and 'Page Cache' from header array
+    // for 'new_item' table.
+    $header = $options['header'];
+    array_unshift($header, '');
+
+    foreach ($header as $key => $header_label) {
+      if (in_array($header_label, array(
+        t('Operation'),
+        t('Parent'),
+        t('Weight'),
+        t('Page<br />Cache'),
+      ))) {
+        unset($header[$key]);
+      }
+    }
 
     $output .= '<a name="themekey_new_rule"></a>';
     $output .= theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('id' => 'themekey-new-item')));

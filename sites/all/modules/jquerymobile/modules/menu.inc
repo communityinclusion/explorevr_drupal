@@ -1,8 +1,15 @@
 <?php
+
 /**
  * @file
+ * Alterations required to the menu module.
  */
 
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * For menu_edit_item form.
+ */
 function jquerymobile_form_menu_edit_item_alter(&$form, $form_state) {
   global $theme_key;
 
@@ -12,6 +19,11 @@ function jquerymobile_form_menu_edit_item_alter(&$form, $form_state) {
   }
 }
 
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * For node_form form.
+ */
 function jquerymobile_form_node_form_alter(&$form, $form_state) {
   global $theme_key;
 
@@ -23,7 +35,9 @@ function jquerymobile_form_node_form_alter(&$form, $form_state) {
   }
 }
 
-
+/**
+ * Implements hook_menu_item_alter().
+ */
 function jquerymobile_menu_item_alter(array &$form, array $item = array()) {
   if (!module_exists('menu_attributes')) {
     $form['options'] = array(
@@ -89,7 +103,7 @@ function jquerymobile_menu_item_alter(array &$form, array $item = array()) {
     '#required' => FALSE,
     '#options' => array(
       '' => t('default'),
-      'list-divider' => t('List Divider')
+      'list-divider' => t('List Divider'),
     ),
   );
   $form['options']['jquerymobile_attributes']['data-theme'] = array(
@@ -103,7 +117,7 @@ function jquerymobile_menu_item_alter(array &$form, array $item = array()) {
       'b' => t('Blue'),
       'c' => t('White'),
       'd' => t('Grey'),
-      'e' => t('Yellow')
+      'e' => t('Yellow'),
     ),
   );
   $form['options']['jquerymobile_attributes']['data-icon'] = array(
@@ -161,6 +175,9 @@ function jquerymobile_menu_link_alter(&$item, $menu) {
   }
 }
 
+/**
+ * Implements hook_get_link_attributes().
+ */
 function jquerymobile_get_link_attributes($item) {
   global $theme_key;
 
@@ -168,7 +185,7 @@ function jquerymobile_get_link_attributes($item) {
     if (isset($item['options']['jquerymobile_attributes'])) {
       return $item['options']['jquerymobile_attributes'];
     }
-    else{
+    else {
       return array();
     }
   }
@@ -176,11 +193,3 @@ function jquerymobile_get_link_attributes($item) {
     return array();
   }
 }
-
-
-
-
-
-
-
-

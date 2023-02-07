@@ -1,3 +1,8 @@
+ThemeKey 7.x-3.5, 2015-xx-xx
+----------------------------
+[#2533256] Loparev, mkalkbrenner: Add support of group and weight options to Themekey CSS
+
+
 ThemeKey 7.x-3.4, 2015-07-06
 ----------------------------
 [#2224913] Rory Downes, mkalkbrenner: Admin Interface broken / Potential incompatibility with WAMP on Windows

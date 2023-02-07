@@ -1,9 +1,11 @@
 <?php
 
-/** @file
+/**
+ * @file
  * Provides the jQuery Mobile library to modules and themes that request it.
  */
-require_once(drupal_get_path('module', 'jquerymobile') . '/jquerymobile.inc');
+
+require_once drupal_get_path('module', 'jquerymobile') . '/jquerymobile.inc';
 
 /**
  * Implements hook_init().
@@ -11,22 +13,21 @@ require_once(drupal_get_path('module', 'jquerymobile') . '/jquerymobile.inc');
 function jquerymobile_init() {
   foreach (module_list() as $module) {
     if (is_file(drupal_get_path('module', 'jquerymobile') . '/modules/' . str_replace('_', '-', $module) . '.inc')) {
-      require_once(drupal_get_path('module', 'jquerymobile') . '/modules/' . str_replace('_', '-', $module) . '.inc');
+      require_once drupal_get_path('module', 'jquerymobile') . '/modules/' . str_replace('_', '-', $module) . '.inc';
     }
   }
 }
 
-/*
+/**
  * Implements hook_menu().
- *
  */
 function jquerymobile_menu() {
   $items = array();
-    $items['admin/config/jquerymobile'] = array(
+  $items['admin/config/jquerymobile'] = array(
     'title' => 'jQuery Mobile',
     'description' => 'jQuery Mobile tools.',
     'page callback' => 'system_admin_menu_block_page',
-    'access arguments' => array('access administration pages'),
+    'access arguments' => array('administer site configuration'),
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
@@ -39,7 +40,7 @@ function jquerymobile_menu() {
     'file' => 'jquerymobile.admin.inc',
     'weight' => 0,
   );
-    // Theme configuration subtabs.
+  // Theme configuration subtabs.
   $items['admin/config/jquerymobile/settings/global'] = array(
     'title' => 'Global settings',
     'type' => MENU_DEFAULT_LOCAL_TASK,
@@ -64,7 +65,9 @@ function jquerymobile_menu() {
   return $items;
 }
 
-
+/**
+ * Implements hook_menu_alter().
+ */
 function jquerymobile_menu_alter(&$items) {
   $items['node']['page callback'] = 'jquerymobile_page_default';
 }
@@ -81,9 +84,8 @@ function jquerymobile_help($path, $arg) {
   }
 }
 
-/*
+/**
  * Implements hook_permission().
- *
  */
 function jquerymobile_permission() {
   return array(
@@ -102,6 +104,9 @@ function jquerymobile_permission() {
   );
 }
 
+/**
+ * Implements hook_library().
+ */
 function jquerymobile_library() {
   $libraries = array();
 
@@ -114,11 +119,13 @@ function jquerymobile_library() {
       $jqm_path = 'http://code.jquery.com/mobile/' . variable_get('jquerymobile_jquerymobile_version', '1.0.1');
       $option = 'external';
       break;
+
     case 'other':
       $jqm_path = variable_get('jquerymobile_jqm_files_path', NULL);
       $jquery_path = variable_get('jquerymobile_jquery_files_path', NULL);
       $option = 'external';
       break;
+
     default:
       $jqm_path = $path . '/jquery.mobile-' . variable_get('jquerymobile_jquerymobile_version', '1.0.1');
       $jquery_path = $path . '/jquery-' . variable_get('jquerymobile_jquery_version', '1.6.4');
@@ -141,14 +148,14 @@ function jquerymobile_library() {
       $jqm_path . '/jquery.mobile-' . variable_get('jquerymobile_jquerymobile_version', '1.0.1') . $min . '.css' => array(
         'weight' => 101,
         'type' => $option,
-        'group' => CSS_THEME, 
-        'every_page' => TRUE, 
-        'media' => 'all', 
-        'preprocess' => FALSE, 
+        'group' => CSS_THEME,
+        'every_page' => TRUE,
+        'media' => 'all',
+        'preprocess' => FALSE,
       ),
     ),
   );
-  
+
   $libraries['jquerymobile.custom'] = array(
     'title' => 'jQuery Mobile',
     'website' => 'http://jquerymobile.com/',
@@ -164,14 +171,14 @@ function jquerymobile_library() {
       $jqm_path . '/jquery.mobile.structure-' . variable_get('jquerymobile_jquerymobile_version', '1.0.1') . $min . '.css' => array(
         'weight' => 101,
         'type' => $option,
-        'group' => CSS_THEME, 
-        'every_page' => TRUE, 
-        'media' => 'all', 
-        'preprocess' => FALSE, 
+        'group' => CSS_THEME,
+        'every_page' => TRUE,
+        'media' => 'all',
+        'preprocess' => FALSE,
       ),
     ),
   );
-  
+
   $libraries['jquerymobile.jquery'] = array(
     'title' => 'jQuery',
     'website' => 'http://code.jquery.com/',
@@ -181,10 +188,10 @@ function jquerymobile_library() {
         'group' => JS_THEME,
         'weight' => 101,
         'type' => $option,
-        'scope' => 'header', 
-        'every_page' => TRUE, 
-        'preprocess' => TRUE, 
-        'cache' => TRUE, 
+        'scope' => 'header',
+        'every_page' => TRUE,
+        'preprocess' => TRUE,
+        'cache' => TRUE,
         'defer' => FALSE,
       ),
     ),
@@ -201,7 +208,7 @@ function jquerymobile_element_info_alter(&$type) {
   global $theme_key;
 
   if (_jquerymobile_is_mobile_theme($theme_key)) {
-    // add a custom pre_render function to checkboxes elements
+    // Add a custom pre_render function to checkboxes elements.
     if (isset($type['checkboxes']['#pre_render'])) {
       $type['checkboxes']['#pre_render'][] = 'jquerymobile_pre_render_checkboxes';
     }
@@ -209,13 +216,13 @@ function jquerymobile_element_info_alter(&$type) {
       $type['checkboxes']['#pre_render'] = array('jquerymobile_pre_render_checkboxes');
     }
 
-    // add default #multiple value to checkboxes as false
+    // Add default #multiple value to checkboxes as false.
     if (!isset($type['checkbox']['#multiple'])) {
       $type['checkbox']['#multiple'] = FALSE;
     }
 
-    // add a new process function to actions type
-    // add a custom pre_render function to checkboxes elements
+    // Add a new process function to actions type.
+    // Add a custom pre_render function to checkboxes elements.
     if (isset($type['actions']['#process'])) {
       $type['actions']['#process'][] = 'jquerymobile_process_actions';
     }
@@ -240,6 +247,8 @@ function jquerymobile_entity_info_alter(&$entity_info) {
 }
 
 /**
+ * Prerender the checkboxes.
+ *
  * @todo: make flip switches work
  */
 function jquerymobile_pre_render_checkboxes($element) {
@@ -268,7 +277,7 @@ function jquerymobile_process_actions($element) {
       2 => 'b',
       3 => 'c',
       4 => 'd',
-      5 => 'e'
+      5 => 'e',
     );
     $children = element_children($element);
     $count = count($children) - 1;
@@ -295,7 +304,7 @@ function jquerymobile_process_text_format($element) {
     $element['format']['#prefix'] = '<div data-role="collapsible" data-collapsed="true"><h3>' . t('Text Format') . '</h3>';
     $element['format']['#suffix'] = '</div>';
     $element['format']['help']['#weight'] = 100;
-    // remove element title since it is added above
+    // Remove element title since it is added above.
     $element['format']['format']['#title'] = NULL;
   }
   return $element;
@@ -308,7 +317,7 @@ function jquerymobile_process_text_format($element) {
  * Enable additonal attributes for link elements.
  */
 function jquerymobile_preprocess_link(&$variables) {
-  // Check if the link needs processing
+  // Check if the link needs processing.
   if (isset($variables['options']['jquerymobile']['button']) && TRUE === isset($variables['options']['jquerymobile']['button'])) {
     _jquerymobile_button_settings($variables['options']['attributes'], $variables['options']['jquerymobile']);
   }
@@ -320,21 +329,21 @@ function jquerymobile_preprocess_link(&$variables) {
  * Enable additional attribute for button elements.
  */
 function jquerymobile_preprocess_button(&$variables) {
-  _jquerymobile_button_settings($variables['element']['attributes'], $variables['element'], '#');  
+  _jquerymobile_button_settings($variables['element']['attributes'], $variables['element'], '#');
 }
 
 /**
- * List of available icons
+ * List of available icons.
  *
  * Values are saved in the form 'position'  => array(<attribute settings>)
  * They are saved this way to simplify sending the appropriate options
- * to drupal_attributes() or you can use the top level keys as the value to 
+ * to drupal_attributes() or you can use the top level keys as the value to
  * pass along with data-iconpos
  *
  * For example: top => array('data-iconpos' => 'top')
  *
  * @return array
- *  Returns an array of icon positions
+ *   Returns an array of icon positions
  */
 function jquerymobile_icon_position_options() {
   return array(
@@ -347,10 +356,10 @@ function jquerymobile_icon_position_options() {
 }
 
 /**
- * List of available icons
+ * List of available icons.
  *
  * @return array
- *  Returns an array of icon names
+ *   Returns an array of icon names
  */
 function jquerymobile_icon_options() {
   return array(
@@ -360,86 +369,85 @@ function jquerymobile_icon_options() {
     'arrow-d' => 'arrow-d',
     'delete' => 'delete',
     'plus' => 'plus',
-    'minus' =>  'minus',
-    'check' =>  'check',
-    'gear' =>   'gear',
+    'minus' => 'minus',
+    'check' => 'check',
+    'gear' => 'gear',
     'refresh' => 'refresh',
     'forward' => 'forward',
-    'back' =>   'back',
-    'grid' =>   'grid',
-    'star' =>   'star',
-    'alert' =>  'alert',
-    'info' =>   'info',
-    'home' =>   'home',
+    'back' => 'back',
+    'grid' => 'grid',
+    'star' => 'star',
+    'alert' => 'alert',
+    'info' => 'info',
+    'home' => 'home',
     'search' => 'search',
   );
 }
 
 /**
- * Generate the attributes array for the given button settings
+ * Generate the attributes array for the given button settings.
  *
  * @param array &$attributes
- *  Referen to the attributes array
+ *   Reference to the attributes array
  * @param array &$settings
- *  Reference to the settings array
- * @param string $prefix [optional]
- *  Prefix character for options in the settings array
- *  Valid values are '' and '#'.
+ *   Reference to the settings array
+ * @param string $prefix
+ *   (optional) Prefix character for options in the settings array
+ *   Valid values are '' and '#'.
  */
 function _jquerymobile_button_settings(&$attributes, &$settings, $prefix = '') {
-  // Assign the prefix the proper value if not blank
+  // Assign the prefix the proper value if not blank.
   if (!empty($prefix)) {
     $prefix = '#';
   }
-  
-  // Add the button role
+
+  // Add the button role.
   if (isset($settings[$prefix . 'button']) && $settings[$prefix . 'button'] === TRUE) {
     $attributes['data-role'] = 'button';
   }
-  
-  // Add the rounded corner option
+
+  // Add the rounded corner option.
   if (isset($settings[$prefix . 'corners'])) {
     $attributes['data-corners'] = $settings[$prefix . 'corners'] ? 'true' : 'false';
   }
 
-  // Add an icon and any supplementary options
+  // Add an icon and any supplementary options.
   if (isset($settings[$prefix . 'icon'])) {
-    // Validate the icon option
+    // Validate the icon option.
     $icons = jquerymobile_icon_options();
     if (isset($icons[$settings[$prefix . 'icon']])) {
-      // Assign the icon
+      // Assign the icon.
       $attributes['data-icon'] = $icons[$settings[$prefix . 'icon']];
-      
-      // Check for any other icon options
 
-      // Set icon position
+      // Check for any other icon options.
+      // Set icon position.
       if (isset($settings[$prefix . 'icon_position'])) {
-        // Validate the icon position
+        // Validate the icon position.
         $positions = jquerymobile_icon_position_options();
         if (isset($positions[$settings[$prefix . 'icon_position']])) {
           $attributes['data-iconpos'] = $settings[$prefix . 'icon_position'];
         }
       }
-      
-      // Set icon shadow
+
+      // Set icon shadow.
       if (isset($element[$prefix . 'icon_shadow'])) {
         $attributes['data-iconshadow'] = $settings[$prefix . 'icon_shadow'] ? 'true' : 'false';
       }
     }
   }
-  
-  // Mark the button to be inline
+
+  // Mark the button to be inline.
   if (isset($settings[$prefix . 'inline'])) {
     $attributes['data-inline'] = $settings[$prefix . 'inline'] ? 'true' : 'false';
   }
-  
-  // Add the shadow property
+
+  // Add the shadow property.
   if (isset($settings[$prefix . 'shadow'])) {
     $attributes['data-shadow'] = $settings[$prefix . 'shadow'] ? 'true' : 'false';
   }
 
   if (isset($settings[$prefix . 'swatch'])) {
-    // Validate the option
+    // Validate the option.
     if (ctype_alpha($settings[$prefix . 'swatch']) && strlen($settings[$prefix . 'swatch']) == 1) {
       $attributes['data-theme'] = drupal_strtolower($settings[$prefix . 'swatch']);
     }

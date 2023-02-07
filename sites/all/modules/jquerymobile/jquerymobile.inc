@@ -7,7 +7,6 @@
 
 /**
  * Menu callback; Generate a listing of promoted nodes.
- *
  */
 function jquerymobile_page_default() {
   global $theme_key;
@@ -39,7 +38,7 @@ function jquerymobile_page_default() {
       '#theme' => 'pager',
       '#weight' => 5,
     );
-    drupal_set_title(t(''));
+    drupal_set_title('');
   }
   else {
     drupal_set_title(t('Welcome to @site-name', array('@site-name' => variable_get('site_name', 'Drupal'))), PASS_THROUGH);
@@ -65,7 +64,9 @@ function jquerymobile_page_default() {
 
 }
 
-
+/**
+ * Load the required files.
+ */
 function jquerymobile_load_files() {
   global $theme_key;
 
@@ -73,11 +74,11 @@ function jquerymobile_load_files() {
   drupal_add_js(_jquerymobile_build_js(), array('type' => 'inline', 'group' => JS_THEME, 'weight' => 102));
   if (_jquerymobile_get_setting($theme_key, 'custom_themes') != NULL) {
     drupal_add_css(variable_get('jquerymobile_custom_path', drupal_get_path('theme', $theme_key) . '/styles/jquery.mobile.overrides.css'), array(
-      'type' => 'file', 
-      'group' => CSS_THEME, 
-      'every_page' => TRUE, 
-      'media' => 'all', 
-      'preprocess' => FALSE, 
+      'type' => 'file',
+      'group' => CSS_THEME,
+      'every_page' => TRUE,
+      'media' => 'all',
+      'preprocess' => FALSE,
       'weight' => 99,
     ));
     drupal_add_library('jquerymobile', 'jquerymobile.custom');
@@ -87,52 +88,55 @@ function jquerymobile_load_files() {
   }
 }
 
+/**
+ * Build the javascript for jquerymobile.
+ */
 function _jquerymobile_build_js() {
-global $theme_key;
+  global $theme_key;
 
   $settings = _jquerymobile_get_settings($theme_key);
-  if (isSet($settings)){
+  if (isset($settings)) {
     $output = '';
     $output .= 'var jqm = jQuery.noConflict();' . "\n";
     $output .= 'jqm(document).bind("mobileinit", function() {' . "\n";
-    if (isSet($settings['ns']))
+    if (isset($settings['ns']))
       $output .= "\n\t" . 'jqm.mobile.ns = "' . $settings['ns'] . '";';
-    if (isSet($settings['autoInitializePage']))
-      $output .= "\n\t" . 'jqm.mobile.autoInitializePage = ' . $settings['autoInitializePage'] . ';';   
-    if (isSet($settings['subPageUrlKey']))
-      $output .= "\n\t" . 'jqm.mobile.subPageUrlKey = "' . $settings['subPageUrlKey'] . '";';    
-    if (isSet($settings['activePageClass']))  
+    if (isset($settings['autoInitializePage']))
+      $output .= "\n\t" . 'jqm.mobile.autoInitializePage = ' . $settings['autoInitializePage'] . ';';
+    if (isset($settings['subPageUrlKey']))
+      $output .= "\n\t" . 'jqm.mobile.subPageUrlKey = "' . $settings['subPageUrlKey'] . '";';
+    if (isset($settings['activePageClass']))
       $output .= "\n\t" . 'jqm.mobile.activePageClass = "' . $settings['activePageClass'] . '";';
-    if (isSet($settings['activeBtnClass']))
+    if (isset($settings['activeBtnClass']))
       $output .= "\n\t" . 'jqm.mobile.activeBtnClass = "' . $settings['activeBtnClass'] . '";';
-    if (isSet($settings['ajaxEnabled']))
+    if (isset($settings['ajaxEnabled']))
       $output .= "\n\t" . 'jqm.mobile.ajaxEnabled = ' . $settings['ajaxEnabled'] . ';';
-    if (isSet($settings['hashListeningEnabled']))
+    if (isset($settings['hashListeningEnabled']))
       $output .= "\n\t" . 'jqm.mobile.hashListeningEnabled = ' . $settings['hashListeningEnabled'] . ';';
-    if (isSet($settings['defaultPageTransition']))
+    if (isset($settings['defaultPageTransition']))
       $output .= "\n\t" . 'jqm.mobile.defaultPageTransition = "' . $settings['defaultPageTransition'] . '";';
-    if (isSet($settings['defaultDialogTransition']))
+    if (isset($settings['defaultDialogTransition']))
       $output .= "\n\t" . 'jqm.mobile.defaultDialogTransition = "' . $settings['defaultDialogTransition'] . '";';
-    if (isSet($settings['minScrollBack']))
+    if (isset($settings['minScrollBack']))
       $output .= "\n\t" . 'jqm.mobile.minScrollBack = "' . $settings['minScrollBack'] . '";';
-    if (isSet($settings['loadingMessage']))
+    if (isset($settings['loadingMessage']))
       $output .= "\n\t" . 'jqm.mobile.loadingMessage = "' . $settings['loadingMessage'] . '";';
-    if (isSet($settings['pageLoadErrorMessage']))
+    if (isset($settings['pageLoadErrorMessage']))
       $output .= "\n\t" . 'jqm.mobile.pageLoadErrorMessage = "' . $settings['pageLoadErrorMessage'] . '";';
-    if (isSet($settings['linkBindingEnabled']))
+    if (isset($settings['linkBindingEnabled']))
       $output .= "\n\t" . 'jqm.mobile.linkBindingEnabled = ' . $settings['linkBindingEnabled'] . ';';
-    if (isSet($settings['pushStateEnabled']))
+    if (isset($settings['pushStateEnabled']))
       $output .= "\n\t" . 'jqm.mobile.pushStateEnabled = ' . $settings['pushStateEnabled'] . ';';
-    if (isSet($settings['touchOverflowEnabled']))
+    if (isset($settings['touchOverflowEnabled']))
     $output .= "\n\t" . 'jqm.mobile.touchOverflowEnabled = ' . $settings['touchOverflowEnabled'] . ';';
-    
+
     $output .= "\n});";
-  }                     
+  }
 
   return $output;
 }
 
-/*
+/**
  * Add custom swatches as options.
  *
  * Allows renaming existing swatches or adding new ones.
@@ -153,6 +157,9 @@ function _jquerymobile_get_custom_themes() {
   return $options;
 }
 
+/**
+ * Get list of themes.
+ */
 function _jquerymobile_get_theme_list() {
   $option = array();
   $themes = list_themes();
@@ -164,6 +171,9 @@ function _jquerymobile_get_theme_list() {
   return $options;
 }
 
+/**
+ * Check for mobile theme.
+ */
 function _jquerymobile_is_mobile_theme($theme = NULL) {
   if ($theme != NULL) {
     $result = db_select('jquerymobile', 'j')
@@ -177,10 +187,16 @@ function _jquerymobile_is_mobile_theme($theme = NULL) {
   return FALSE;
 }
 
+/**
+ * Callback to check for theme access.
+ */
 function _jquerymobile_access_theme($theme = NULL) {
   return _jquerymobile_is_mobile_theme($theme->name) && user_access('manage jquerymobile theme settings');
 }
 
+/**
+ * Get multiple jquerymobile settings.
+ */
 function _jquerymobile_get_settings($theme = NULL) {
 
   if ($theme != NULL) {
@@ -195,6 +211,9 @@ function _jquerymobile_get_settings($theme = NULL) {
   return array();
 }
 
+/**
+ * Get a jquerymobile setting.
+ */
 function _jquerymobile_get_setting($theme = NULL, $setting = NULL) {
 
   if ($theme != NULL) {
@@ -211,6 +230,9 @@ function _jquerymobile_get_setting($theme = NULL, $setting = NULL) {
   return array();
 }
 
+/**
+ * Set jquerymobile settings.
+ */
 function _jquerymobile_set_settings($settings = array()) {
   if ($settings) {
     $result = db_select('jquerymobile', 'j')

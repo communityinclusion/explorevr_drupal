@@ -90,7 +90,10 @@ function themekey_css_init() {
     ));
     if (is_array($result) && 'default' != $result['theme']) {
       drupal_alter('themekey_add_css', $result['theme'], $result['rules_matched']);
-      drupal_add_css($result['theme']);
+      drupal_add_css($result['theme'], array(
+        'group' => constant($result['css_group']),
+        'weight' => $result['css_weight'],
+      ));
       if (variable_get('themekey_debug_trace_rule_switching', FALSE)) {
         themekey_set_debug_message('Adding CSS file %css_file.', array('%css_file' => $result['theme']));
       }
@@ -115,4 +118,18 @@ function themekey_css_help($path, $arg) {
         drupal_render($properties_form) .
         drupal_render($operators_form);
   }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Add 'Show list of css files' option on debug settings form.
+ */
+function themekey_css_form_themekey_debug_settings_form_alter(array &$form, array &$form_state, $form_id) {
+  $form['themekey_debug']['themekey_css_debug_css_files'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show list of css files'),
+    '#default_value' => variable_get('themekey_css_debug_css_files', FALSE),
+    '#description' => t('Prints out detailed information about css files added on a page. Useful to debug ThemeKey Css rules.'),
+  );
 }
