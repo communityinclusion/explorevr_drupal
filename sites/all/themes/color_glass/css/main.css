@@ -2303,7 +2303,7 @@ a.divLink:hover{
 }
 
 .btnGrid a {color:#fff;}
-.btnGrid a:hover, .btnGrid a:focus {background-color: #2980b9;}
+.btnGrid a:hover, .btnGrid a:focus {background-color: #2980b9;color:#fff;}
 
 .btnGrid  {margin-bottom:10px;}
 
