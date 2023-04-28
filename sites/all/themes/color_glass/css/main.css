@@ -2282,3 +2282,32 @@ a.divLink:hover{
 }
 
 
+/* Btn grid on Youth Appreticeship toolkit */
+
+ 
+.btn-sq-lg {
+  width: 100% !important;
+  height: 140px !important;
+  font-size: 16px;
+}
+.btnGrid a {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.btnGrid i.fa.fa-3x {
+    padding-top: 5px;
+}
+
+.btnGrid  {margin-bottom:10px;}
+
+.btn1 {background-color:#9AC2E5}
+.btn2 {background-color:#52c1ce}
+.btn3 {background-color:#4fc6a4}
+.btn4 {background-color:#49c074}
+.btn5 {background-color:#4ab744}
+.btn6 {background-color:#6fab46}
+
