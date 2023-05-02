@@ -2288,8 +2288,10 @@ a.divLink:hover{
 .btn-sq-lg {
   width: 100% !important;
   height: 140px !important;
-  font-size: 16px;
+  font-size: 16px;   
+  text-align: center;
 }
+
 .btnGrid a {
     display: flex;
     flex-wrap: wrap;
