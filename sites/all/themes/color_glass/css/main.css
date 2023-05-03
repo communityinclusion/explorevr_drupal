@@ -2304,7 +2304,7 @@ a.divLink:hover{
     padding-top: 5px;
 }
 
-.btnGrid a {color:#fff;}
+.btnGrid a {color:#000;}
 .btnGrid a:hover, .btnGrid a:focus {background-color: #2980b9;color:#fff;}
 
 .btnGrid  {margin-bottom:10px;}
