@@ -1,4 +1,5 @@
-/* bootstrap overrides */
+/* bootstrap overrides
+deployment tweak */
 
 @import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
@@ -2280,5 +2281,3 @@ a.divLink:hover{
     display: none;
   }
 }
-
-
