@@ -1,22 +1,23 @@
 <?php
 /**
  * @file
+ * Alterations required to the node module.
  */
 
 /**
  * Construct a drupal_render() style array from an array of loaded nodes.
  *
- * @param $nodes
+ * @param array $nodes
  *   An array of nodes as returned by node_load_multiple().
- * @param $view_mode
+ * @param string $view_mode
  *   View mode, e.g. 'full', 'teaser'...
- * @param $weight
+ * @param int $weight
  *   An integer representing the weight of the first node in the list.
- * @param $langcode
+ * @param string $langcode
  *   (optional) A language code to use for rendering. Defaults to the global
  *   content language of the current request.
  *
- * @return
+ * @return array
  *   An array in the format expected by drupal_render().
  */
 function _jquerymobile_view_multiple($nodes, $view_mode = 'teaser', $weight = 0, $langcode = NULL) {
@@ -48,6 +49,9 @@ function _jquerymobile_view_multiple($nodes, $view_mode = 'teaser', $weight = 0,
   return $build;
 }
 
+/**
+ * Private callback for hook_node_view().
+ */
 function _jquerymobile_node_view($node, $view_mode = 'full', $langcode = NULL) {
   global $theme_key;
 
@@ -62,7 +66,6 @@ function _jquerymobile_node_view($node, $view_mode = 'full', $langcode = NULL) {
     $prefix = '<li>';
     $suffix = '</li>';
   }
-
 
   // Populate $node->content with a render() array.
   node_build_content($node, $view_mode, $langcode);
@@ -94,4 +97,3 @@ function _jquerymobile_node_view($node, $view_mode = 'full', $langcode = NULL) {
 
   return $build;
 }
-

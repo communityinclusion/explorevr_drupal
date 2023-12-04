@@ -1,8 +1,8 @@
 <?php
 
-/*
+/**
  * @file
- *
+ * Admin settings for the jquerymobile module.
  */
 
 /**
@@ -107,6 +107,9 @@ function jquerymobile_admin_settings() {
   return system_settings_form($form);
 }
 
+/**
+ * Create the admin local settings form.
+ */
 function jquerymobile_admin_local_settings($form, &$form_state, $theme = NULL) {
   $settings = _jquerymobile_get_settings($theme);
 
@@ -117,11 +120,11 @@ function jquerymobile_admin_local_settings($form, &$form_state, $theme = NULL) {
     'slideup' => t('slideup'),
     'slidedown' => t('slidedown'),
     'pop' => t('pop'),
-    'fade' => t('fade')
+    'fade' => t('fade'),
   );
   $booleans = array(
     1 => t('True'),
-    0 => t('False')
+    0 => t('False'),
   );
 
   $form['jquerymobile']['theme'] = array(
@@ -148,7 +151,7 @@ function jquerymobile_admin_local_settings($form, &$form_state, $theme = NULL) {
     '#type' => 'textarea',
     '#default_value' => $settings['custom_themes'],
     '#title' => t('Custom CSS Swatches'),
-    '#description' => t('Add new swatches or rename existing swatches. One per line, in <em>css_key|value</em> format, like <em>a|My Swatch</em> or <em>g|Red</em><br><i><b>Note: </b>If there are any custom themes listed then the default swatch css file will be replaced with the following file automatically and the jQuery Mobile structure file will be added.</i>'),
+    '#description' => t('Add new swatches or rename existing swatches. One per line, in <em>css_key|value</em> format, like <em>a|My Swatch</em> or <em>g|Red</em><br><em><strong>Note: </strong>If there are any custom themes listed then the default swatch css file will be replaced with the following file automatically and the jQuery Mobile structure file will be added.</em>'),
   );
   $form['jquerymobile']['theme_settings']['jquerymobile_custom_path'] = array(
     '#type' => 'textfield',
@@ -236,7 +239,7 @@ function jquerymobile_admin_local_settings($form, &$form_state, $theme = NULL) {
     '#type' => 'select',
     '#title' => t('Default Page Transition') . ' (<em>defaultPageTransition</em>)',
     '#default_value' => $settings['defaultPageTransition'],
-    '#description' => t('Set the default transition for page changes that use Ajax. Set to \'none\' for no transitions by default.'),
+    '#description' => t("Set the default transition for page changes that use Ajax. Set to 'none' for no transitions by default."),
     '#options' => $transitions,
   );
   /* touchOverflowEnabled */
@@ -252,7 +255,7 @@ function jquerymobile_admin_local_settings($form, &$form_state, $theme = NULL) {
     '#type' => 'select',
     '#title' => t('Default Dialog Transition') . ' (<em>defaultDialogTransition</em>)',
     '#default_value' => $settings['defaultDialogTransition'],
-    '#description' => t('Set the default transition for dialog changes that use Ajax. Set to \'none\' for no transitions by default.'),
+    '#description' => t("Set the default transition for dialog changes that use Ajax. Set to 'none' for no transitions by default."),
     '#options' => $transitions,
   );
   /* minScrollBack */
@@ -283,6 +286,9 @@ function jquerymobile_admin_local_settings($form, &$form_state, $theme = NULL) {
   return system_settings_form($form);
 }
 
+/**
+ * Validate the local admin settings.
+ */
 function jquerymobile_admin_local_settings_validate($form, &$form_state, $theme = NULL) {
 
   if (!is_numeric($form_state['values']['minScrollBack'])) {
@@ -311,12 +317,18 @@ function jquerymobile_admin_local_settings_validate($form, &$form_state, $theme 
 
 }
 
+/**
+ * Validate the admin settings submission.
+ */
 function jquerymobile_admin_settings_validate($form, &$form_state, $theme = NULL) {
   if (!is_dir($form_state['values']['jquerymobile_library_path'])) {
     form_set_error('jquerymobile_library_path', t('The directory') . ' <i>' . $form_state['values']['jquerymobile_library_path'] . '</i> ' . t('does not exist.'));
   }
 }
 
+/**
+ * Save the admin settings.
+ */
 function jquerymobile_admin_settings_submit($form, &$form_state, $theme = NULL) {
   $themes = $form_state['values']['jquerymobile_mobile_themes'];
   foreach ($themes as $theme => $name) {
@@ -334,7 +346,9 @@ function jquerymobile_admin_settings_submit($form, &$form_state, $theme = NULL) 
   menu_rebuild();
 }
 
-
+/**
+ * Save the local admin settings.
+ */
 function jquerymobile_admin_local_settings_submit($form, &$form_state) {
   form_state_values_clean($form_state);
 

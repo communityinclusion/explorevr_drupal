@@ -31,6 +31,8 @@ function menu_block_add_block_form($form, &$form_state) {
 function menu_block_add_block_form_submit($form, &$form_state) {
   // Determine the delta of the new block.
   $block_ids = variable_get('menu_block_ids', array());
+  // clean up possibly corrupt block IDs
+  $block_ids = array_filter(array_filter($block_ids, 'is_numeric'), 'intval');
   $delta = empty($block_ids) ? 1 : max($block_ids) + 1;
   $form_state['values']['delta'] = $delta;
 
@@ -174,7 +176,9 @@ function _menu_block_format_title($config) {
     );
     if ($config['parent_mlid']) {
       $parent_item = menu_link_load($config['parent_mlid']);
-      $replacements['@menu_name'] = $parent_item['title'];
+      if ($parent_item) {
+        $replacements['@menu_name'] = $parent_item['title'];
+      }
     }
     if ($config['follow']) {
       $title = t('@menu_name (active menu item)', $replacements);

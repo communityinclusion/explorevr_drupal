@@ -1,0 +1,1 @@
+/home/drupal-7.x/authorize.php

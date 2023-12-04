@@ -2,7 +2,7 @@
 
 /**
  * @file
- *   drush integration for jquerymobile.
+ * Drush integration for jquerymobile.
  */
 
 /**
@@ -17,9 +17,6 @@
  *
  * @see drush_parse_command()
  * @see http://api.drush.ws/api/drush/includes%21command.inc/function/drush_parse_command
- *
- * @return
- *   An associative array describing your command(s).
  */
 function jquerymobile_drush_command() {
   $items = array();
@@ -31,10 +28,10 @@ function jquerymobile_drush_command() {
       'jquery' => dt('Enter the version of the jQuery framework you wish to download. If omitted Drush will use 1.6.4'),
       'path' => dt('Optional. A path to the download folder. If omitted Drush will use the default location (sites/all/libraries).'),
     ),
-   'bootstrap' => DRUSH_BOOTSTRAP_FULL,
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_FULL,
   );
 
-    return $items;
+  return $items;
 }
 
 /**
@@ -46,7 +43,6 @@ function jquerymobile_drush_command() {
  * any functions you have added in your own modules/themes.
  *
  * To print something to the terminal window, use drush_print().
- *
  */
 function drush_jquerymobile() {
   $jqm = drush_get_option('jqm');
@@ -67,7 +63,7 @@ function drush_jquerymobile() {
 
   $path = drush_get_context('DRUSH_DRUPAL_ROOT') . '/' . $path;
 
-  // Download jQuery Mobile
+  // Download jQuery Mobile.
   if (!is_dir($path)) {
     drush_op('mkdir', $path);
     drush_log(dt('Directory @path was created', array('@path' => $path)), 'notice');
@@ -95,7 +91,7 @@ function drush_jquerymobile() {
     drush_log(dt('Drush was unable to remove jquery.mobile-' . $jqm . '.zip from @path', array('@path' => $path)), 'error');
   }
 
-  // Download jQuery
+  // Download jQuery.
   $files = array('.js', '.min.js');
 
   if (!is_dir($path . '/jquery-' . $jquery)) {
