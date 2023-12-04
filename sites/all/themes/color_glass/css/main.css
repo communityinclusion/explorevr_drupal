@@ -1,6 +1,7 @@
 /* bootstrap overrides */
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
+
 
 
 
@@ -121,8 +122,8 @@ ul.nav li.dropdown:hover ul.dropdown-menu li.expanded:hover > ul.dropdown-menu {
 
 
 
-.callout-box {
-     background: hsl(0, 0%, 100%) none repeat scroll 0 0;
+.callout-box{
+  	 background: hsl(0, 0%, 100%) none repeat scroll 0 0;
    	 border: 1px solid hsl(0, 0%, 82%);
    	 box-shadow: 5px 5px 0 hsla(0, 0%, 0%, 0.07);
    	 padding: 15px;
@@ -474,12 +475,12 @@ ul.nav li.dropdown:hover ul.dropdown-menu li.expanded:hover > ul.dropdown-menu {
 }
 
 
-@media screen and (max-width: 899px) and (min-width: 600px) {
+@media screen and (max-width: 899px) and (min-width: 600px)
 .home-welcome img {
     max-height: 90px;
     margin-top: 30px;
 }
-}
+
 
 
 /* home page call to action */
@@ -1785,7 +1786,7 @@ LAYOUT CLASSES : HERO
 		-webkit-flex-wrap: wrap;
 		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
-		position: relative;
+		postiion: relative;
 		margin: -2.5em 0 0 -2.5em;
 	}
 
@@ -2303,15 +2304,15 @@ a.divLink:hover{
     padding-top: 5px;
 }
 
-.btnGrid a {color:#fff;}
+.btnGrid a {color:#000;}
 .btnGrid a:hover, .btnGrid a:focus {background-color: #2980b9;color:#fff;}
 
 .btnGrid  {margin-bottom:10px;}
 
-.btn1 {background-color:#004153}
-.btn2 {background-color:#017b9a}
-.btn3 {background-color:#3d987e}
-.btn4 {background-color:#3b9d5f}
-.btn5 {background-color:rgb(66, 165, 61)}
-.btn6 {background-color:#5f933c}
+.btn1 {background-color:#9AC2E5}
+.btn2 {background-color:#52c1ce}
+.btn3 {background-color:#4fc6a4}
+.btn4 {background-color:#49c074}
+.btn5 {background-color:#4ab744}
+.btn6 {background-color:#6fab46}
 
