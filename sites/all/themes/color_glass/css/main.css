@@ -1,6 +1,6 @@
 /* bootstrap overrides */
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
 
 
@@ -2304,15 +2304,15 @@ a.divLink:hover{
     padding-top: 5px;
 }
 
-.btnGrid a {color:#fff;}
+.btnGrid a {color:#000;}
 .btnGrid a:hover, .btnGrid a:focus {background-color: #2980b9;color:#fff;}
 
 .btnGrid  {margin-bottom:10px;}
 
-.btn1 {background-color:#004153}
-.btn2 {background-color:#017b9a}
-.btn3 {background-color:#3d987e}
-.btn4 {background-color:#3b9d5f}
-.btn5 {background-color:#43a83d}
-.btn6 {background-color:#5f933c}
+.btn1 {background-color:#9AC2E5}
+.btn2 {background-color:#52c1ce}
+.btn3 {background-color:#4fc6a4}
+.btn4 {background-color:#49c074}
+.btn5 {background-color:#4ab744}
+.btn6 {background-color:#6fab46}
 
