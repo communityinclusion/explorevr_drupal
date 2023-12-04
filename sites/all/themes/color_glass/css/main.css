@@ -2304,15 +2304,15 @@ a.divLink:hover{
     padding-top: 5px;
 }
 
-.btnGrid a {color:#000;}
+.btnGrid a {color:#fff;}
 .btnGrid a:hover, .btnGrid a:focus {background-color: #2980b9;color:#fff;}
 
 .btnGrid  {margin-bottom:10px;}
 
-.btn1 {background-color:#9AC2E5}
-.btn2 {background-color:#52c1ce}
-.btn3 {background-color:#4fc6a4}
-.btn4 {background-color:#49c074}
-.btn5 {background-color:#4ab744}
-.btn6 {background-color:#6fab46}
+.btn1 {background-color:#637f97}
+.btn2 {background-color:#3d929b}
+.btn3 {background-color:#3d9c81}
+.btn4 {background-color:#3ea162}
+.btn5 {background-color:#42a43c}
+.btn6 {background-color:#60943c}
 
