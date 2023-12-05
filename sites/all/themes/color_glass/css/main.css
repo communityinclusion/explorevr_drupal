@@ -2343,3 +2343,21 @@ a.divLink:hover{
    text-align: center;
    display: inline-block;
  }
+
+
+  ul.arrowlist {
+  list-style-type: none
+}
+
+ ul.arrowlist li {
+  display: grid;
+  justify-content: start;
+  grid-template-columns: 20px auto;
+  align-items: center;
+}
+
+ ul.arrowlist li::before {
+  content: "\2192";
+  font-size: 16px;
+  color: #999;
+}
