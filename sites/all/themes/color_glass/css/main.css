@@ -2310,3 +2310,36 @@ a.divLink:hover{
 .btn5 {background-color:#42a43c}
 .btn6 {background-color:#60943c}
 
+
+
+/* toolkits > rural-youth-apprenticeship-toolkit > diversity */
+
+ ol.column1 {
+   list-style: none;
+   counter-reset: item 0;
+   
+ }
+ 
+  ol.column2 {
+   list-style: none;
+    counter-reset: item 5;
+   
+ }
+ 
+ 
+.column1  li , .column2 li{
+   counter-increment: item;
+   margin-bottom: 5px;
+ 
+   
+ }
+.column1 li:before, .column2 li:before {
+   margin-right: 10px;
+   content: counter(item);
+   background: #5d9834;
+   border-radius: 100%;
+   color: white;
+   width: 1.5em;
+   text-align: center;
+   display: inline-block;
+ }
