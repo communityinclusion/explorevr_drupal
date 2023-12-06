@@ -2360,9 +2360,8 @@ list-style-type: "\2192";
                           border-color: #d3d3d3;
                         }
 
-.ryad.panel .panel-body {
-		    padding: 15px;
-		    background-color: #f6f6f6;
+.ryad.panel.panel-primary .panel-body {
+    background-color: #f6f6f6;
 }
 
 .ryad span.glyphicon.glyphicon-info-sign {
