@@ -2373,9 +2373,13 @@ list-style-type: "\2192";
 
 
 .bottom-arrow{
-  border-bottom: 5px solid #00A64E;
-  text-align: center;
-  font-size: 18pt;
+  border-bottom: 3px solid #00A64E;
+}
+
+.bottom-arrow p {
+    padding-bottom: 5px;
+    padding-top:15px;
+    font-size: 16px;;
 }
 .bottom-arrow:after {
     content:'';
@@ -2385,7 +2389,8 @@ list-style-type: "\2192";
     margin: 0 auto;
     width: 0;
     height: 0;
-    border-top: 25px solid #00A64E;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
+    border-top: 20px solid #00A64E;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
 }
+
