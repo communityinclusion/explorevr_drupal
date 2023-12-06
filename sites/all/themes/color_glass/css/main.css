@@ -2360,7 +2360,7 @@ list-style-type: "\2192";
                           border-color: #d3d3d3;
                         }
 
-.ryad.panel-body {
+.ryad.panel .panel-body {
 		    padding: 15px;
 		    background-color: #f6f6f6;
 }
@@ -2368,4 +2368,24 @@ list-style-type: "\2192";
 .ryad span.glyphicon.glyphicon-info-sign {
     font-size: 30px;
     vertical-align: middle;
+    float: left;
+}
+
+
+.bottom-arrow{
+  border-bottom: 5px solid #00A64E;
+  text-align: center;
+  font-size: 18pt;
+}
+.bottom-arrow:after {
+    content:'';
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 0;
+    height: 0;
+    border-top: 25px solid #00A64E;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
 }
