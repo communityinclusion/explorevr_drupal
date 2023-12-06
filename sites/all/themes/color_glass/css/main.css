@@ -2380,7 +2380,6 @@ list-style-type: "\2192";
 .bottom-arrow h3 {
     padding-bottom: 5px;
     padding-top:15px;
-    font-size: 16px;;
 }
 .bottom-arrow:after {
     content:'';
