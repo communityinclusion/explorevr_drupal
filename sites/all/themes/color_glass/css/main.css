@@ -2373,10 +2373,11 @@ list-style-type: "\2192";
 
 
 .bottom-arrow{
-  border-bottom: 3px solid #00A64E;
+  border-bottom: 3px solid #5c9731;
+  margin-bottom:30px;
 }
 
-.bottom-arrow p {
+.bottom-arrow h3 {
     padding-bottom: 5px;
     padding-top:15px;
     font-size: 16px;;
@@ -2389,7 +2390,7 @@ list-style-type: "\2192";
     margin: 0 auto;
     width: 0;
     height: 0;
-    border-top: 20px solid #00A64E;
+    border-top: 20px solid #5c9731;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
 }
