@@ -2349,3 +2349,11 @@ padding-left:20px;
 margin-right:10px;
 list-style-type: "\2192";
 }
+
+
+.ryad .panel-heading h4 {
+    color: #fff;
+    font-size: larger;
+}
+
+.ryad .panel {margin:20px 0 ;}
