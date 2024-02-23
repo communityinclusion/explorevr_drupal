@@ -363,7 +363,7 @@ function color_glass_table(array $variables) {
   }
 
   // Format the table footer:
-  if (count($footer)) {
+  if (is_countable($footer) && count($footer)) {
     $output .= "<tfoot>\n";
     foreach ($footer as $row) {
       // Check if we're dealing with a simple or complex row.

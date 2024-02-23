@@ -8,8 +8,21 @@
 use Mailgun\Mailgun;
 
 define('MAILGUN_DOCUMENTATION_LINK', 'https://www.drupal.org/node/2547591');
-define('MAILGUN_DASHBOARD_LINK', 'https://mailgun.com/app/dashboard');
+define('MAILGUN_DASHBOARD_LINK', 'https://app.mailgun.com/app/dashboard');
 define('MAILGUN_ADMIN_PAGE', 'admin/config/services/mailgun');
+
+define('MAILGUN_API_KEY', 'mailgun_api_key');
+define('MAILGUN_DOMAIN', 'mailgun_domain');
+define('MAILGUN_API_ENDPOINT', 'mailgun_api_endpoint');
+define('MAILGUN_TEST_MODE', 'mailgun_test');
+define('MAILGUN_LOG_EMAILS', 'mailgun_log');
+define('MAILGUN_TRACKING', 'mailgun_tracking');
+define('MAILGUN_TRACKING_CLICKS', 'mailgun_tracking_clicks');
+define('MAILGUN_TRACKING_OPENS', 'mailgun_tracking_opens');
+define('MAILGUN_FORMAT', 'mailgun_format');
+define('MAILGUN_QUEUE', 'mailgun_queue');
+define('MAILGUN_QUEUE_THRESHOLD', 'mailgun_queue_threshold');
+define('MAILGUN_TAGGING_MAILKEY', 'mailgun_tagging_mailkey');
 
 /**
  * Implements hook_menu().
@@ -167,10 +180,10 @@ function mailgun_form_libraries_admin_library_status_form_alter(&$form, &$form_s
  * @param string $key
  *   The Mailgun API key. Leave empty to use the API key saved in database.
  *
- * @return \Mailgun\Mailgun
- *   Mailgun object.
+ * @return \Mailgun\Mailgun|FALSE
+ *   Mailgun object or FALSE if Mailgun settings are not correct.
  */
-function mailgun_get_client($key = '') {
+function mailgun_get_client($key = '', $endpoint = '') {
   // Check if the Mailgun PHP library is installed.
   if (!mailgun_check_library()) {
     watchdog('mailgun', 'Mailgun client initialization failed: Unable to load the Mailgun PHP library.', array(), WATCHDOG_ERROR);
@@ -183,7 +196,8 @@ function mailgun_get_client($key = '') {
     return FALSE;
   }
 
-  return Mailgun::create($key);
+  $endpoint = empty($endpoint) ? variable_get(MAILGUN_API_ENDPOINT, 'https://api.mailgun.net') : $endpoint;
+  return Mailgun::create($key, $endpoint);
 }
 
 /**
@@ -203,16 +217,30 @@ function mailgun_check_library() {
 }
 
 /**
+ * Check if Mailgun API settings are configured.
+ *
+ * @return bool
+ *   TRUE if api settings are configured, FALSE otherwise.
+ */
+function mailgun_check_api_settings() {
+  return !empty(variable_get('mailgun_api_key', '')) && !empty(variable_get('mailgun_domain', ''));
+}
+
+/**
  * Prepares variables for mailgun-message.tpl.php.
  *
  * Adds id/module/key-specific hook suggestions.
+ * For example, user password reset mail will have the following suggestions:
+ *  - mailgun_message__user_password_reset;
+ *  - mailgun_message__password_reset;
+ *  - mailgun_message__user.
  *
  * @see templates/mailgun-message.tpl.php
  */
 function template_preprocess_mailgun_message(&$variables) {
   $variables['theme_hook_suggestions'][] = 'mailgun_message__' . $variables['message']['id'];
-  $variables['theme_hook_suggestions'][] = 'mailgun_message__' . $variables['message']['module'];
   $variables['theme_hook_suggestions'][] = 'mailgun_message__' . $variables['message']['key'];
+  $variables['theme_hook_suggestions'][] = 'mailgun_message__' . $variables['message']['module'];
 }
 
 /**
@@ -287,6 +315,9 @@ function mailgun_send(array $mailgun_message) {
     try {
       $result = $client->domains()->index();
       if (!empty($result)) {
+        if ($result->getTotalCount() > 100) {
+          $result = $client->domains()->index($result->getTotalCount());
+        }
         foreach ($result->getDomains() as $domain) {
           $domains[$domain->getName()] = $domain->getName();
         }

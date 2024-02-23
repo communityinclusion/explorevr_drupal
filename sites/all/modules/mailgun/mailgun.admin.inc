@@ -24,14 +24,18 @@ function mailgun_admin_settings(array $form, array &$form_state) {
     )), 'error');
   }
 
-  $key = variable_get('mailgun_api_key', '');
+  global $language;
 
-  $form['mailgun_api_key'] = array(
-    '#title' => t('Mailgun API key'),
+  // Get title and description from mailgun_variable_info().
+  module_load_include('inc', 'mailgun', 'mailgun.variable');
+  $variables = module_invoke('mailgun', 'variable_info', array('language' => $language));
+
+  $key = variable_get(MAILGUN_API_KEY, '');
+
+  $form[MAILGUN_API_KEY] = array(
+    '#title' => $variables[MAILGUN_API_KEY]['title'],
     '#type' => 'textfield',
-    '#description' => t('Get your Secret API key from the !link.', array(
-      '!link' => l(t('Mailgun dashboard'), MAILGUN_DASHBOARD_LINK),
-    )),
+    '#description' => $variables[MAILGUN_API_KEY]['description'],
     '#default_value' => $key,
     '#required' => TRUE,
   );
@@ -39,7 +43,8 @@ function mailgun_admin_settings(array $form, array &$form_state) {
   $client = FALSE;
   if (!empty($key)) {
     try {
-      $client = mailgun_get_client($key);
+      $endpoint = !empty($form_state['values'][MAILGUN_API_ENDPOINT]) ? $form_state['values'][MAILGUN_API_ENDPOINT] : '';
+      $client = mailgun_get_client($key, $endpoint);
     }
     catch (Exception $e) {
       watchdog('mailgun', 'An exception occurred. @code: @message', array(
@@ -57,31 +62,54 @@ function mailgun_admin_settings(array $form, array &$form_state) {
     );
     $result = $client->domains()->index();
     if (!empty($result)) {
-      foreach ($result->getDomains() as $domain) {
-        $domain_options[$domain->getName()] = $domain->getName();
+      if ($result->getTotalCount() > 100) {
+        $result = $client->domains()->index($result->getTotalCount());
       }
+      $options = [];
+      foreach ($result->getDomains() as $domain) {
+        $options[$domain->getName()] = $domain->getName();
+      }
+      ksort($options);
+      $domain_options = array_merge($domain_options, $options);
     }
 
-    $form['mailgun_domain'] = array(
-      '#title' => t('Domain'),
+    $form[MAILGUN_DOMAIN] = array(
+      '#title' => $variables[MAILGUN_DOMAIN]['title'],
       '#type' => 'select',
       '#options' => $domain_options,
-      '#description' => t('Mails will be sent using this domain.'),
-      '#default_value' => variable_get('mailgun_domain', '_sender'),
+      '#description' => $variables[MAILGUN_DOMAIN]['description'],
+      '#default_value' => variable_get(MAILGUN_DOMAIN, '_sender'),
+      '#prefix' => '<div id="mailgun-domains-wrapper">',
+      '#suffix' => '</div>',
     );
 
-    $form['mailgun_test'] = array(
-      '#title' => t('Test mode'),
-      '#type' => 'checkbox',
-      '#default_value' => variable_get('mailgun_test', FALSE),
-      '#description' => t('Mailgun will accept the message but will not send it. This is useful for testing purposes.'),
+    $form[MAILGUN_API_ENDPOINT] = array(
+      '#title' => $variables[MAILGUN_API_ENDPOINT]['title'],
+      '#type' => 'select',
+      '#options' => [
+        'https://api.mailgun.net' => t('Default (US)'),
+        'https://api.eu.mailgun.net' => t('Europe'),
+      ],
+      '#description' => $variables[MAILGUN_API_ENDPOINT]['description'],
+      '#default_value' => variable_get(MAILGUN_API_ENDPOINT, $variables[MAILGUN_API_ENDPOINT]['default']),
+      '#ajax' => [
+        'wrapper' => 'mailgun-domains-wrapper',
+        'callback' => 'mailgun_admin_domains_callback',
+      ],
     );
 
-    $form['mailgun_log'] = array(
-      '#title' => t('Log mails'),
+    $form[MAILGUN_TEST_MODE] = array(
+      '#title' => $variables[MAILGUN_TEST_MODE]['title'],
       '#type' => 'checkbox',
-      '#description' => t('Log all mails sent through Mailgun. Messages fail to send will be logged regardless of this setting.'),
-      '#default_value' => variable_get('mailgun_log', FALSE),
+      '#default_value' => variable_get(MAILGUN_TEST_MODE, FALSE),
+      '#description' => $variables[MAILGUN_TEST_MODE]['description'],
+    );
+
+    $form[MAILGUN_LOG_EMAILS] = array(
+      '#title' => $variables[MAILGUN_LOG_EMAILS]['title'],
+      '#type' => 'checkbox',
+      '#description' => $variables[MAILGUN_LOG_EMAILS]['description'],
+      '#default_value' => variable_get(MAILGUN_LOG_EMAILS, FALSE),
     );
 
     $form['extra'] = array(
@@ -104,30 +132,28 @@ function mailgun_admin_settings(array $form, array &$form_state) {
       '#title' => t('Tracking'),
     );
 
-    $form['extra']['tracking']['mailgun_tracking'] = array(
-      '#title' => t('Enable tracking'),
+    $form['extra']['tracking'][MAILGUN_TRACKING] = array(
+      '#title' => $variables[MAILGUN_TRACKING]['title'],
       '#type' => 'select',
       '#options' => $options,
-      '#description' => t('Whether to enable event tracking by default or not. See !link for details.', array(
-        '!link' => l(t('Tracking Messages'), 'https://documentation.mailgun.com/user_manual.html#tracking-messages'),
-      )),
-      '#default_value' => variable_get('mailgun_tracking', 'default'),
+      '#description' => $variables[MAILGUN_TRACKING]['description'],
+      '#default_value' => variable_get(MAILGUN_TRACKING, 'default'),
     );
 
-    $form['extra']['tracking']['mailgun_tracking_clicks'] = array(
-      '#title' => t('Enable click tracking'),
+    $form['extra']['tracking'][MAILGUN_TRACKING_CLICKS] = array(
+      '#title' => $variables[MAILGUN_TRACKING_CLICKS]['title'],
       '#type' => 'select',
       '#options' => $options,
-      '#description' => t('Whether to enable click tracking by default or not.'),
-      '#default_value' => variable_get('mailgun_tracking_clicks', 'default'),
+      '#description' => $variables[MAILGUN_TRACKING_CLICKS]['description'],
+      '#default_value' => variable_get(MAILGUN_TRACKING_CLICKS, 'default'),
     );
 
-    $form['extra']['tracking']['mailgun_tracking_opens'] = array(
-      '#title' => t('Enable open tracking'),
+    $form['extra']['tracking'][MAILGUN_TRACKING_OPENS] = array(
+      '#title' => $variables[MAILGUN_TRACKING_OPENS]['title'],
       '#type' => 'select',
       '#options' => $options,
-      '#description' => t('Whether to enable open tracking by default or not.'),
-      '#default_value' => variable_get('mailgun_tracking_opens', 'default'),
+      '#description' => $variables[MAILGUN_TRACKING_OPENS]['description'],
+      '#default_value' => variable_get(MAILGUN_TRACKING_OPENS, 'default'),
     );
 
     $formats = array('_none' => t('- None -'));
@@ -137,32 +163,26 @@ function mailgun_admin_settings(array $form, array &$form_state) {
       }
       $formats[$format->format] = $format->name;
     }
-    $form['extra']['mailgun_format'] = array(
-      '#title' => t('Text format'),
+    $form['extra'][MAILGUN_FORMAT] = array(
+      '#title' => $variables[MAILGUN_FORMAT]['title'],
       '#type' => 'select',
-      '#description' => t('Specify an additional text format to filter the message through before sending the email.'),
+      '#description' => $variables[MAILGUN_FORMAT]['description'],
       '#options' => $formats,
-      '#default_value' => variable_get('mailgun_format', '_none'),
+      '#default_value' => variable_get(MAILGUN_FORMAT, '_none'),
     );
 
-    $form['extra']['mailgun_queue'] = array(
-      '#title' => t('Queue mails'),
+    $form['extra'][MAILGUN_QUEUE] = array(
+      '#title' => $variables[MAILGUN_QUEUE]['title'],
       '#type' => 'checkbox',
-      '#description' => t('Mails will be queued and sent during cron runs. Useful for sending a large number of emails.'),
-      '#default_value' => variable_get('mailgun_queue', FALSE),
+      '#description' => $variables[MAILGUN_QUEUE]['description'],
+      '#default_value' => variable_get(MAILGUN_QUEUE, FALSE),
     );
 
-    $form['extra']['mailgun_tagging_mailkey'] = array(
+    $form['extra'][MAILGUN_TAGGING_MAILKEY] = array(
       '#type' => 'checkbox',
-      '#title' => t('Enable tags by mail key'),
-      '#description' => t('See !url for details.', array(
-        '!url' => l(t('Tagging'), 'https://documentation.mailgun.com/user_manual.html#tagging', array(
-          'attributes' => array(
-            'onclick' => "target='_blank'",
-          ),
-        )),
-      )),
-      '#default_value' => variable_get('mailgun_tagging_mailkey', TRUE),
+      '#title' => $variables[MAILGUN_TAGGING_MAILKEY]['title'],
+      '#description' => $variables[MAILGUN_TAGGING_MAILKEY]['description'],
+      '#default_value' => variable_get(MAILGUN_TAGGING_MAILKEY, TRUE),
     );
   }
 
@@ -173,15 +193,22 @@ function mailgun_admin_settings(array $form, array &$form_state) {
 }
 
 /**
+ * AJAX callback for domains list.
+ */
+function mailgun_admin_domains_callback($form, $form_state) {
+  return $form[MAILGUN_DOMAIN];
+}
+
+/**
  * Form validation handler for mailgun_admin_settings().
  *
  * Perform additional validation to ensure the API key entered is valid.
  */
 function mailgun_admin_settings_validate($form, &$form_state) {
-  if ($form['mailgun_api_key']['#default_value'] != $form_state['values']['mailgun_api_key']) {
+  if ($form[MAILGUN_API_KEY]['#default_value'] != $form_state['values'][MAILGUN_API_KEY]) {
     // The API key has changed. Perform validation.
-    $form_state['values']['mailgun_api_key'] = trim($form_state['values']['mailgun_api_key']);
-    $client = mailgun_get_client($form_state['values']['mailgun_api_key']);
+    $form_state['values'][MAILGUN_API_KEY] = trim($form_state['values'][MAILGUN_API_KEY]);
+    $client = mailgun_get_client($form_state['values'][MAILGUN_API_KEY]);
 
     if ($client === FALSE) {
       drupal_set_message(t('Could not connect to Mailgun API. Please check your settings'), 'warning');
@@ -193,7 +220,7 @@ function mailgun_admin_settings_validate($form, &$form_state) {
       drupal_set_message(t('Your API key has been successfully validated.'));
     }
     catch (Exception $e) {
-      form_set_error('mailgun_api_key', t('An exception occurred. @code: @message', array(
+      form_set_error(MAILGUN_API_KEY, t('An exception occurred. @code: @message', array(
         '@code' => $e->getCode(),
         '@message' => $e->getMessage(),
       )));
